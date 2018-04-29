@@ -1,0 +1,218 @@
+ @import url('https://fonts.googleapis.com/css?family=Lobster');
+body{
+  min-height:400vh;
+}
+
+nav ul li:hover{
+  background:red;
+}
+nav ul li{
+  padding:5%;
+}
+form {
+ 
+  background: -webkit-linear-gradient(#1a237e, #fff); 
+  padding-top: 1% !important;
+  padding-right: 5% !important;
+  padding-left: 5% !important;
+  border-radius: 10px;
+  font-size: 1.2em !important; 
+  opacity: 0.9;
+}
+fieldset {
+    border: 0 !important;
+}
+legend {
+  padding-top:5%;
+  paddging-bottom:5%;
+  font-size:1.7em;
+  color:white;
+}
+form label{
+  font-size:1em !important;
+  font-weight:bold;
+}
+form{
+  margin-bottom: 5%;
+}
+form i{
+  color:white;
+}
+
+
+form input, textarea{
+  font-size:1em !important;
+  color: white !important;
+  text-shadow: 1px 1px 1px; black;
+}
+.ux{
+  align-item:center;
+}
+.logo {
+  font-weight: 300;
+  font-size: 1.4em;
+  font-family:'Lobster', serif; 
+  padding-left:10%;
+}
+.ikn{
+  font-size: 6.5em !important;
+  
+}
+.thin-text {
+  font-size: 1.1em;
+  font-weight:300;
+  font-style:italic;
+  text-align: center;
+  opacity: 0.7 !important;
+}
+@-webkit-keyframes typing {
+	from {
+		width: 0;
+	}
+}
+
+@-webkit-keyframes blink-caret {
+	50% {
+		border-color: transparent;
+	}
+}
+
+h1 {
+	font: bold 300% roboto, Monaco, monospace;
+  opacity: 0.9;
+  color: #fff;
+	border-right: .1em solid white;
+	width: 16.5em;
+	width: 14.5ch;
+  
+	white-space: nowrap;
+	overflow: hidden;
+	-webkit-animation: typing 5s steps(21, end), blink-caret 0.3s step-end infinite alternate;
+}
+header h4{
+  font-size: 1.2em;
+}
+a.gld {
+  border-radius: 5px;
+}
+a.gld:hover {
+  background-color:#ffca28 !important;
+}
+.social-container {
+	position: relative;
+	display: inline-block;
+	width: 164px;
+	height: 36px;
+	perspective: 300px;
+	font-size: 24px;
+	margin: 8px;
+}
+
+.social-container .social-cube {
+	position: absolute;
+	left: 0;
+	top: 100px;
+	width: 100%;
+	height: 100%;
+	transform-style: preserve-3d;
+	transition: all 0.333s;
+	transform: translateZ(-18px);
+}
+
+.social-container .social-cube .front, .social-container .social-cube .bottom {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #fff;
+	transition: background 0.333s;
+}
+
+.social-container .social-cube .front {
+	transform: rotateX(0deg) translateZ(18px);
+}
+
+.social-container .social-cube .bottom {
+	transform: rotateX(-90deg) translateZ(18px);
+}
+
+.social-container:hover .social-cube {
+	transform: translateZ(-18px) rotateX(90deg);
+}
+
+.social-container.twitter .social-cube .front, .social-container.twitter .social-cube .back {
+	background: #4099FF;
+}
+
+.social-container.twitter .social-cube .bottom {
+	background: #0d7eff;
+}
+
+.social-container.twitter:hover .social-cube .bottom {
+	background: #4099FF;
+}
+
+.social-container.twitter:hover .social-cube .front {
+	background: #73b4ff;
+}
+
+.social-container.github .social-cube .front, .social-container.github .social-cube .back {
+	background: #767676;
+}
+
+.social-container.github .social-cube .bottom {
+	background: #5d5d5d;
+}
+
+.social-container.github:hover .social-cube .bottom {
+	background: #767676;
+}
+
+.social-container.github:hover .social-cube .front {
+	background: #909090;
+}
+
+.social-container.codepen .social-cube .front, .social-container.codepen .social-cube .back {
+	background: #191919;
+}
+
+.social-container.codepen .social-cube .bottom {
+	background: black;
+}
+
+.social-container.codepen:hover .social-cube .bottom {
+	background: #191919;
+}
+
+.social-container.codepen:hover .social-cube .front {
+	background: #333333;
+}
+@-webkit-keyframes typing {
+	from {
+		width: 0;
+	}
+}
+
+@-webkit-keyframes blink-caret {
+	50% {
+		border-color: transparent;
+	}
+}
+
+h1 {
+	font: bold 400% roboto, Monaco, monospace;
+  opacity: 1;
+  color: #fff;
+  text-shadow: 2px 2px 3px black;
+	border-right: .1em solid white;
+	width: 16.5em;
+	width: 14.5ch;
+	margin: 1em 1em;
+	white-space: nowrap;
+	overflow: hidden;
+	-webkit-animation: typing 5s steps(21, end), blink-caret 0.3s step-end infinite alternate;
+}
