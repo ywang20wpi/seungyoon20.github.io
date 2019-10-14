@@ -1,0 +1,16 @@
+---
+layout: post
+title:  "Symantec Corporation: Software Engineer Intership"
+date:   2019-05-20 09:30:02 -0400
+categories: "Work_Experience"
+tags: [cloud, python, async, AWS, Azure]
+---
+•	Developed scalable Azure cloud access security broker (CASB), which logs and identifies critical user activities, such as unauthorized resource purchases, dangerous permission changes and risky files creations, to AWS DynamoDB.
+
+•	Implemented Microsoft authorization module with Azure AD to enable CASB to get tokens to access Azure services.
+
+•	Architected backend worker with Python3 Async IO and developed web UI in Angular 2. 
+
+•	Setup Docker images and CloudFormation template to automate deploying the worker containers on AWS ECS cluster.
+
+•	Created dashboards to visualize all user activity history and risky files under Microsoft Azure cloud storage so that users can monitor their accounts effectively from CASB web UI.

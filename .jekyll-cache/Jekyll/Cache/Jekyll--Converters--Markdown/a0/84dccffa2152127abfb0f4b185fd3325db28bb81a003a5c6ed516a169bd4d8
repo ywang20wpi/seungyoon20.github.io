@@ -1,0 +1,40 @@
+I"Å<div class="tags-expo">
+  <div class="tags-expo-list">
+    
+    <a href="#work-experience" class="post-tag">Work_Experience</a>
+    
+    <a href="#research" class="post-tag">Research</a>
+    
+  </div>
+  <hr />
+  <div class="tags-expo-section">
+    
+    <h3 id="work-experience">Work_Experience</h3>
+    <ul class="post-list">
+      
+      <li>
+        <!-- <span class="post-meta">20 May 2019</span> -->
+        <a class="post-link" href="/work_experience/2019/05/20/symantec.html">
+        Symantec Corporation: Software Engineer Intership
+      
+      </a>
+    </li>
+      
+    </ul>
+    
+    <h3 id="research">Research</h3>
+    <ul class="post-list">
+      
+      <li>
+        <!-- <span class="post-meta">09 Oct 2019</span> -->
+        <a class="post-link" href="/research/2019/10/09/ttr.html">
+        Tissue-Type Recognition
+      
+      </a>
+    </li>
+      
+    </ul>
+    
+  </div>
+</div>
+:ET
