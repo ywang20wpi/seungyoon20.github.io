@@ -22,8 +22,8 @@ title: Yixue Wang
 email: ywang20@wpi.edu
 description: >- # this means to ignore newlines until "baseurl:"
   Woomy<:=
-# baseurl: "" # the subpath of your site, e.g. /blog
-# url: "" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "/" # the subpath of your site, e.g. /blog
+url: "https://seungyoon20.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  seungyoon20
 linkedin_username: yixue-wang-90818b152
 sass:
