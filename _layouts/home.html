@@ -1,0 +1,36 @@
+---
+layout: default
+title: Index
+---
+<h1>
+    {{page.title}}
+</h1>
+<div class="tags-expo">
+        <div class="tags-expo-list">
+          {% for tag in site.categories %}
+          <a href="#{{ tag[0] | slugify }}" class="post-tag">{{ tag[0] }}</a>
+          {% endfor %}
+        </div>
+        <hr/>
+        <div class="tags-expo-section">
+          {% for tag in site.categories %}
+          <h3 id="{{ tag[0] | slugify }}">{{ tag[0] }}</h3>
+          <ul class="post-list">
+            {% for post in tag[1] %}
+              <div class="card border-secondary mb-3" style="max-width: 20rem;">
+                <div class="card-header">{{ post.header }}</div>
+                <div class="card-body">
+                  <h5 class="card-title">{{ post.title }}</h5>
+                  <p class="card-text">
+                    Some quick example text to build on the card title and make up the bulk of the card's content.
+                    <a class="post-link" href="{{ site.baseurl }}{{ post.url }}">
+                        Details >> 
+                      </a>
+                  </p>
+                </div>
+              </div>
+            {% endfor %}
+          </ul>
+          {% endfor %}
+        </div>
+      </div>

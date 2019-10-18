@@ -1,6 +1,7 @@
 ---
 layout: post
-title:  "Symantec Corporation: Software Engineer Intership"
+header: Symantec Corporation
+title:  Software Engineer Intership
 date:   2019-05-20 09:30:02 -0400
 categories: "Work_Experience"
 tags: [cloud, python, async, AWS, Azure]

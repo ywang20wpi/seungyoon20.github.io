@@ -1,6 +1,7 @@
 ---
 layout: post
-title:  "Tissue-Type Recognition"
+header: WPI Math & RBE & CS
+title:  Tissue-Type Recognition
 date:   2019-10-09 19:30:02 -0400
 categories: Research
 tags: [applied math, matlab, python]
