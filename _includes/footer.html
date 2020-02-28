@@ -8,13 +8,14 @@
 
       <div class="col-sm">
         <ul class="list-unstyled">
-          <li>
-            {%- if site.author -%}
+          <!-- <li>
+            <p>{{- site.description | escape -}}</p>
+              {%- if site.author -%}
               {{ site.author | escape }}
             {%- else -%}
               {{ site.title | escape }}
-            {%- endif -%}
-          </li>
+            {%- endif -%} 
+          </li> -->
           {%- if site.email -%}
             <li>
               <a href="mailto:{{ site.email }}">
@@ -27,11 +28,18 @@
 
 
       <div class="col-sm text-right">
-        <p>{{- site.description | escape -}}</p>
+        <!-- <p>{{- site.description | escape -}}</p> -->
+        <a href="https://www.linkedin.com/in/{{site.social.linkedin_username}}/" target="_blank">
+          <img src="{{site.baseurl}}/assets/social_icons/linkedin.svg" alt="LinkedIn" width="30" height="30">
+        </a>
+        <a href="https://www.instagram.com/{{site.social.instagram_username}}/" target="_blank">
+          <img src="{{site.baseurl}}/assets/social_icons/instagram.svg" alt="LinkedIn" width="30" height="30">
+        </a>
+        <a href="https://www.facebook.com/{{site.social.facebook_username}}/" target="_blank">
+          <img src="{{site.baseurl}}/assets/social_icons/facebook.svg" alt="LinkedIn" width="30" height="30">
+        </a>
+        <!-- https://simpleicons.org/ -->
 
-        <p>
-          <a href="https://nicolas-van.github.io/bootstrap-4-github-pages/">Powered by Bootstrap 4 Github Pages</a>
-        </p>
       </div>
 
     </div>

@@ -14,23 +14,38 @@ title: Index
         <hr/>
         <div class="tags-expo-section">
           {% for tag in site.categories %}
-          <h3 id="{{ tag[0] | slugify }}">{{ tag[0] }}</h3>
-          <ul class="post-list">
-            {% for post in tag[1] %}
-              <div class="card border-secondary mb-3" style="max-width: 20rem;">
-                <div class="card-header">{{ post.header }}</div>
-                <div class="card-body">
-                  <h5 class="card-title">{{ post.title }}</h5>
-                  <p class="card-text">
-                    Some quick example text to build on the card title and make up the bulk of the card's content.
-                    <a class="post-link" href="{{ site.baseurl }}{{ post.url }}">
-                        Details >> 
-                      </a>
-                  </p>
+            {% unless tag[0] == 'art' %}
+            <h3 id="{{ tag[0] | slugify }}">{{ tag[0] }}</h3>
+            <ul class="post-list">
+              {% for post in tag[1] %}
+                <div class="card border-secondary mb-3" style="max-width: 20rem;">
+                  <div class="card-header">{{ post.header }}</div>
+                  <div class="card-body">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <p class="card-text">
+                      Some quick example text to build on the card title and make up the bulk of the card's content.
+                      <a class="post-link" href="{{ site.baseurl }}{{ post.url }}">
+                          👉
+                        </a>
+                    </p>
+                  </div>
                 </div>
-              </div>
-            {% endfor %}
-          </ul>
+              {% endfor %}
+            </ul>
+            {% endunless %}
           {% endfor %}
         </div>
-      </div>
+        <!-- <div class="row row-cols-1 row-cols-md-2">
+          {% for post in site.categories['art'] %}
+            <div class="col mb-4">
+              <div class="card bg-dark text-white">
+                <img src="{{site.baseurl}}/assets/Arts/{{post.img}}" class="card-img" alt="...">
+                <div class="card-img-overlay">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  <p class="card-text">Last updated 3 mins ago</p>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+      </div> -->

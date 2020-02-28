@@ -22,10 +22,13 @@ title: Yixue Wang
 email: ywang20@wpi.edu
 description: >- # this means to ignore newlines until "baseurl:"
   Woomy<:=
-baseurl: "/" # the subpath of your site, e.g. /blog
+baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://seungyoon20.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  seungyoon20
-linkedin_username: yixue-wang-90818b152
+social:
+  linkedin_username: yixue-w-90818b152
+  instagram_username: w_n_r1662
+  facebook_username: yixue.wang.794
 sass:
   # sass_dir: _sass
   style: compact
@@ -34,7 +37,7 @@ sass:
 plugins:
   - jekyll-feed
 
-regenerate: false
+regenerate: true
 
 # Exclude from processing.
 # The following items will not be processed, by default.

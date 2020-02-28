@@ -3,7 +3,25 @@ layout: about
 title: About
 permalink: /about/
 ---
-<ul class="nav nav-tabs">
+
+<div class='row'>
+    <div class='col-3'>
+    <img src="{{site.baseurl}}/assets/img/icon.jpg" width="150">
+    </div>
+    <div class='col-9'>
+        <span class="badge badge-secondary">Beijinger</span>
+        <span class="badge badge-primary">Chinese</span>
+        <br>
+        I am Yixue Wang / 王亦雪 / オウ エキセツ. I am from 🇨🇳Beijing, native Mandarin Chinese Speaker, 你好👋、少し日本語が話せます、識講少少廣東話。
+        <br>
+        <span class="badge badge-secondary">Scientist</span>
+        <span class="badge badge-primary">Engineer</span><br>
+            <p>
+                I am Computer Science and Mathematical Science senior in Worcester Polytechnic Institute(WPI).
+            </p>
+    </div>
+</div>
+<!-- <ul class="nav nav-tabs">
   <li class="nav-item">
     <a class="nav-link active" data-toggle="tab" href="#yixue_wang">Yixue Wang</a>
   </li>
@@ -59,4 +77,4 @@ permalink: /about/
         </div>
     </div>
   </div>
-</div>
+</div> -->

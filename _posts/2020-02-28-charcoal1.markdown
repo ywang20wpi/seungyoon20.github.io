@@ -1,0 +1,10 @@
+---
+layout: post
+header: First Charcoal
+title:  First Charcoal Drawing
+date:   2020-02-26 09:30:02 -0400
+categories: "Art"
+tags: [charcoal]
+img: first_charcoal.PNG
+---
+<img src="{{site.baseurl}}/assets/Arts/{{page.img}}">
