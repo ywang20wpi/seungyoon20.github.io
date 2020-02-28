@@ -7,4 +7,4 @@ categories: "Art"
 tags: [watercolor]
 img: liangcha.jpg
 ---
-<img src="{{site.baseurl}}/assets/Arts/{{page.img}}" width="150">
+<img src="{{site.baseurl}}/assets/arts/{{page.img}}">

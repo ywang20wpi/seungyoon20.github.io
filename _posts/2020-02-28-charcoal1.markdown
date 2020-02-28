@@ -7,4 +7,4 @@ categories: "Art"
 tags: [charcoal]
 img: first_charcoal.PNG
 ---
-<img src="{{site.baseurl}}/assets/Arts/{{page.img}}">
+<img src="{{site.baseurl}}/assets/arts/{{page.img}}">
