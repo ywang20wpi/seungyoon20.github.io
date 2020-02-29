@@ -1,10 +1,9 @@
 ---
-layout: post
+layout: art_post
 header: First Charcoal
 title:  First Charcoal Drawing
 date:   2020-02-26 09:30:02 -0400
 categories: "Art"
 tags: [charcoal]
-img: first_charcoal.PNG
+img: first_charcoal.png
 ---
-<img src="{{site.baseurl}}/assets/arts/{{page.img}}">
