@@ -1,10 +1,20 @@
 ---
 layout: default
 ---
-{{page.categories}}
-<h1>{{ page.title }}</h1>
+<h4>
+    {{page.categories}}
+</h4>
+<h1>
+    {{ page.title }}
+    {% if page.icon %}
+        <img src="{{site.baseurl}}/{{page.icon}}" height="80px" style="margin-right: 30px;">
+    {% endif %}
+</h1>
+<p class="text-info">{{ page.date | date: "%-d %B, %Y"}}</p>
+{% for tag in page.tags%} <span class="badge badge-primary">{{tag}}</span>{% endfor %}
 <hr>
 <br>
 <div>
     {{ content }}
 </div>
+<!-- <a href="{{site.baseurl}}" class='btn btn-danger'>👉Back to Home</a> -->

@@ -1,0 +1,12 @@
+---
+layout: post
+header: Lyft
+title:  Incoming Tech Intern
+date:   2019-03-01
+categories: Experience
+tags: []
+icon: assets/social_icons/lyft.svg
+intro: Incoming Software Engineer Intern in Lyft SF office! 
+---
+
+I will join Lyft in May 2020 at San Francisco office as a Software Engineer Intern. I am currently working with HR team to workout which team I will join. I am very excited about it!

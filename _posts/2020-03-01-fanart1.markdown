@@ -1,0 +1,11 @@
+---
+layout: art_post
+header: Fanart K-POP
+title:  K-POP Band `WINNER` Seunghoon
+date:   2016-12-26 09:30:02 -0400
+categories: "Art"
+tags: [digital painting, fanart]
+img: 20161025.jpg
+---
+
+This is a piece of fanart finished in 2016, in which I reference Seunghoon from K-POP group `WINNER`!

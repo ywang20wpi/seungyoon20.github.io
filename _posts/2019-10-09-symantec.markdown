@@ -1,10 +1,12 @@
 ---
 layout: post
-header: Symantec Corporation
-title:  Software Engineer Intership
-date:   2019-05-20 09:30:02 -0400
-categories: "Work_Experience"
+header: Symantec
+title:  Software Engineer Intern
+date:   2019-05-20
+categories: Experience
 tags: [cloud, python, async, AWS, Azure]
+icon: assets/social_icons/symantec.svg
+intro: Worked with CloudSOC CASB team (now under Broadcom Inc.) to provide Microsoft Azure protection.
 ---
 •	Developed scalable Azure cloud access security broker (CASB), which logs and identifies critical user activities, such as unauthorized resource purchases, dangerous permission changes and risky files creations, to AWS DynamoDB.
 

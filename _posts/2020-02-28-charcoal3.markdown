@@ -1,0 +1,11 @@
+---
+layout: art_post
+header: Charcoal Male Body
+title:  Body Charcoal Drawing
+date:   2020-02-26 09:30:02 -0400
+categories: "Art"
+tags: [charcoal, New England School of Fine Art, muscle]
+img: 3rd_charcoal.jpg
+---
+
+This piece was finished at New England School of Fine Art. I really enjoyed drawing the muscles and shadows of the model.

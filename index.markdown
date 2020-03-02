@@ -3,5 +3,5 @@
 # To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 
 layout: home
-title: Index
+title: 歡迎來睇Yixue嘅個人Page~
 ---

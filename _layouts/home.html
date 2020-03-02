@@ -1,6 +1,5 @@
 ---
 layout: default
-title: Index
 ---
 <h1>
     {{page.title}}
@@ -8,30 +7,43 @@ title: Index
 <div class="tags-expo">
         <div class="tags-expo-list">
           {% for tag in site.categories %}
-          <a href="#{{ tag[0] | slugify }}" class="post-tag">{{ tag[0] }}</a>
+            {% unless tag[0] == 'Art' %}
+              <a href="#{{ tag[0] | slugify }}" class="btn btn-outline-info">{{ tag[0] }}</a>
+            {% endunless %}
           {% endfor %}
         </div>
         <hr/>
         <div class="tags-expo-section">
           {% for tag in site.categories %}
-            {% unless tag[0] == 'art' %}
+            {% unless tag[0] == 'Art' %}
             <h3 id="{{ tag[0] | slugify }}">{{ tag[0] }}</h3>
-            <ul class="post-list">
+              <div class="card-deck">
               {% for post in tag[1] %}
-                <div class="card border-secondary mb-3" style="max-width: 20rem;">
-                  <div class="card-header">{{ post.header }}</div>
+              
+                <div class="card border-info mb-3" style="max-width: 320px; min-width: 300px;">
+                  <div class="card-header">
+                    {% if post.icon %}
+                      <img src="{{site.baseurl}}/{{post.icon}}" height="30px" style="margin-right: 10px;">
+                    {% endif %}
+                    {{ post.header }}
+                  </div>
                   <div class="card-body">
                     <h5 class="card-title">{{ post.title }}</h5>
                     <p class="card-text">
-                      Some quick example text to build on the card title and make up the bulk of the card's content.
+                      {% if post.intro %}
+                        {{post.intro}}
+                      {% else %}
+                        Click for more details!
+                      {% endif%}
                       <a class="post-link" href="{{ site.baseurl }}{{ post.url }}">
                           👉
                         </a>
                     </p>
                   </div>
                 </div>
+              
               {% endfor %}
-            </ul>
+            </div>
             {% endunless %}
           {% endfor %}
         </div>

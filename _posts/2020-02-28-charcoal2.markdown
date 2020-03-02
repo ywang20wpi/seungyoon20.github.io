@@ -1,0 +1,11 @@
+---
+layout: art_post
+header: Horizontal Charcoal
+title:  Charcoal Drawing
+date:   2020-02-26 09:30:02 -0400
+categories: "Art"
+tags: [charcoal, New England School of Fine Art]
+img: second_charcoal.png
+---
+
+This is one of my first charcoal drawings, which was finished at New England School of Fine Art. I find the arms of the model to be very beautiful.

@@ -2,15 +2,21 @@
 layout: default
 title: Gallary
 ---
-
+<h1>
+  美術習作
+</h1>
+<p>
+  我由中學到大學最鍾意畫畫， 每個星期二都去 New England School of Fine Art 畫人體。一齊來睇下我嘅美術習作罅~
+</p>
+<hr>
 <div class="row row-cols-1 row-cols-md-2">
     {% for post in site.categories['Art'] %}
       <div class="col mb-4">
-        <div class="card bg-dark text-white">
-          <img src="{{site.baseurl}}/assets/arts/{{post.img}}" class="card-img" alt="...">
+        <div class="card bg-primary text-danger " style="max-width: 450px; min-width: 300px; height: 400px;">
+          <img src="{{site.baseurl}}/assets/arts/{{post.img}}" class="card-img" alt="..." style="height: 400px; object-fit: cover;">
           <div class="card-img-overlay">
             <h5 class="card-title">{{post.title}}</h5>
-            <p class="card-text"><a href="{{post.url}}">👉</a></p>
+            <p class="card-text"><a href="{{post.url}}"><h3>👉</h3></a></p>
           </div>
         </div>
       </div>

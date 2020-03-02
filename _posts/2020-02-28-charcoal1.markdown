@@ -4,6 +4,8 @@ header: First Charcoal
 title:  First Charcoal Drawing
 date:   2020-02-26 09:30:02 -0400
 categories: "Art"
-tags: [charcoal]
+tags: [charcoal, in class]
 img: first_charcoal.png
 ---
+
+This is my first charcoal drawing, which was finished during my Figure Drawing course at WPI in C'20.
