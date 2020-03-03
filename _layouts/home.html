@@ -4,7 +4,47 @@ layout: default
 <h1>
     {{page.title}}
 </h1>
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="height: 300px; margin-bottom: 30px;">
+  <ol class="carousel-indicators">
+    {% for post in site.categories['Art'] %}
+    {% if forloop.first == true %}
+      <li data-target="#carouselExampleIndicators" data-slide-to="0" class=”active”></li>
+    {% else %}
+      <li data-target="#carouselExampleIndicators" data-slide-to=”{{ forloop.index0 }}”></li>
+    {% endif %}
+    {% endfor %}
+    </ol>
+  <div class="carousel-inner">
+    {% for post in site.categories['Art'] %}
+      {% if forloop.first == true %}
+      <div class="carousel-item active" >
+      {% else %}
+      <div class="carousel-item">
+      {% endif %}
+      <a href="{{post.url}}" class="stretched-link">
+      <!-- width: 400px; height: 300px; object-fit: cover; object-position: 0% 40%; -->
+          <img src="{{site.baseurl}}/assets/arts/{{post.img}}" class="d-block w-100" style="height: 300px; object-fit: cover; object-position: 0% 17.5%;" alt="...">
+          <div class="carousel-caption d-none d-md-block rounded" style="background-color: rgba(255, 255, 255, .4)">
+            
+              <h5 class="text-danger">{{post.title}}</h5>
+            
+          </div>
+          </a>
+      </div>
+    {% endfor %}
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
 <div class="tags-expo">
+    <h3>Contents</h3>
         <div class="tags-expo-list">
           {% for tag in site.categories %}
             {% unless tag[0] == 'Art' %}
@@ -47,17 +87,3 @@ layout: default
             {% endunless %}
           {% endfor %}
         </div>
-        <!-- <div class="row row-cols-1 row-cols-md-2">
-          {% for post in site.categories['art'] %}
-            <div class="col mb-4">
-              <div class="card bg-dark text-white">
-                <img src="{{site.baseurl}}/assets/Arts/{{post.img}}" class="card-img" alt="...">
-                <div class="card-img-overlay">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <p class="card-text">Last updated 3 mins ago</p>
-                </div>
-              </div>
-            </div>
-          {% endfor %}
-      </div> -->

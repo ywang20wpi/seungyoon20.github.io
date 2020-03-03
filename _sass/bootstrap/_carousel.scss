@@ -20,6 +20,7 @@
 }
 
 .carousel-inner {
+  background-color: $primary;
   position: relative;
   width: 100%;
   overflow: hidden;
@@ -131,6 +132,7 @@
 }
 .carousel-control-prev-icon {
   background-image: $carousel-control-prev-icon-bg;
+  
 }
 .carousel-control-next-icon {
   background-image: $carousel-control-next-icon-bg;
