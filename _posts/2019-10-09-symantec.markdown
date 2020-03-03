@@ -8,12 +8,38 @@ tags: [cloud, python, async, AWS, Azure]
 icon: assets/social_icons/symantec.svg
 intro: Worked with CloudSOC CASB team (now under Broadcom Inc.) to provide Microsoft Azure protection.
 ---
-•	Developed scalable Azure cloud access security broker (CASB), which logs and identifies critical user activities, such as unauthorized resource purchases, dangerous permission changes and risky files creations, to AWS DynamoDB.
 
-•	Implemented Microsoft authorization module with Azure AD to enable CASB to get tokens to access Azure services.
+## Cambridge Office, CASB Team
+From May to August in 2019, I worked as a software engineer intern student at Symantec Cambridge office with the Enterprise Security Products team on [CloudSOC CASB][cloudsoc]. The product and the team are current a division of Broadcom Inc.
 
-•	Architected backend worker with Python3 Async IO and developed web UI in Angular 2. 
+## Internship Project
+•	Developed a proof-of-concept scalable backend of [CloudSOC CASB][cloudsoc] for `Microsoft Azure`, which logs and identifies critical user activities, such as unauthorized resource purchases, dangerous permission changes and risky files creations.
 
-•	Setup Docker images and CloudFormation template to automate deploying the worker containers on AWS ECS cluster.
+•	Architected backend worker with `Python3 Async IO` and developed web UI in `Angular 2`. 
+•	Setup `Docker `images and `CloudFormation` template to automate deploying the worker containers on `AWS ECS` cluster.
 
-•	Created dashboards to visualize all user activity history and risky files under Microsoft Azure cloud storage so that users can monitor their accounts effectively from CASB web UI.
+•	Designed dashboards that well visualize all user activity history and risky files under `Microsoft Azure` cloud storage so that users can monitor their accounts effectively from CASB web UI.
+
+## Enjoyed the Summer Time with My Team in Cambridge
+
+This was my first time working with such professional and talentful engineers! Those people were really smart and professional with software engineer tools, as well as cloud security techniques. I really enjoyed working out problems and discuss about my project with them!
+
+I joined scrumbs on 10:30 AM on Tuesdays and Thursdays, and when it reached the end of the last sprint, I joined the scrumbs everyday to keep up with the pace of others.
+<figure>
+  <img src="{{site.baseurl}}/assets/img/2019symantecteam.jpg" alt="2019 Summer Symantec Team"/>
+  <figcaption> My Awesome Team Members </figcaption>
+</figure>
+
+I have 2 other intern friends: **Amy and Gis**. We worked on different projects, that I focused on the proof-of-concept of new features, while they two worked on internal tools and release, but we still had a lot of fun together during lunch time.
+<figure>
+  <img src="{{site.baseurl}}/assets/img/2019symantecinterns.jpg" alt="2019 Summer Symantec Interns @ Cambridge Office"/>
+  <figcaption> Awesome Interns</figcaption>
+</figure>
+
+I also met 2 friends who had alot of fun together with me: **Kevin and Wester**. They went to same scrumb meetings with me and worked together with me on the `CASB` for `Microsoft Azure`. Kevin helped me built beautiful and interactive front-end, and Wester provided a basic scalable backend worker class that I built my backend from. They also invited me join their project at **Symantec Innovation Day**, to build a chatbot that can help users setup their CASB.
+<figure>
+  <img src="{{site.baseurl}}/assets/img/innovition_day.jpg" alt="2019 Summer Symantec Close Friends"/>
+  <figcaption> Awesome Friends and Work Partners</figcaption>
+</figure>
+
+[cloudsoc]: https://www.broadcom.com/products/cyber-security/information-protection/cloud-application-security-cloudsoc
