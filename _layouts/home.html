@@ -44,7 +44,7 @@ layout: default
 </div>
 
 <div class="tags-expo">
-    <h3>Contents</h3>
+    <!-- <h3>Contents</h3> -->
         <div class="tags-expo-list">
           {% for tag in site.categories %}
             {% unless tag[0] == 'Art' %}
@@ -56,7 +56,10 @@ layout: default
         <div class="tags-expo-section">
           {% for tag in site.categories %}
             {% unless tag[0] == 'Art' %}
-            <h3 id="{{ tag[0] | slugify }}">{{ tag[0] }}</h3>
+            <h3 id="{{ tag[0] | slugify }}">
+              <img src="{{page.baseurl}}/assets/category_icons/{{tag[0]}}.png" height="40px" style="vertical-align:bottom;">
+              {{ tag[0] }}
+            </h3>
               <div class="card-deck">
               {% for post in tag[1] %}
               
@@ -84,6 +87,9 @@ layout: default
               
               {% endfor %}
             </div>
+            {% if forloop.last == false %}
+              <hr style="border-top: dotted 1px;" />
+            {% endif %}
             {% endunless %}
           {% endfor %}
         </div>
