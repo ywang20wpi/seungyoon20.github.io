@@ -1,8 +1,35 @@
-<div class="my-3">
+<div class="my-3" style="height: auto;">
     <h1> 🎷Recent Features 🎵 </h1>
     <p class="lead font-weight-normal">
         I covered the "I see the light (from Tangled)" with my Roland Aerophone and GarageBand. <br>
         This is one of my favorite Disney songs. Hope you will enjoy it!
     </p>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/KVCZFab7YTU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <div class="media-container">
+        <iframe scrolling="no" id="myIframe" src="https://www.youtube.com/embed/KVCZFab7YTU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <!-- <script>
+        // Selecting the iframe element
+        var iframe = document.getElementById("myIframe");
+        
+        // Adjusting the iframe height onload event
+        iframe.onload = function(){
+            iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
+        }
+    </script> -->
 </div>
+<style>
+    .media-container {
+       position: relative;
+       padding-bottom: 56.25%; // = 16:9
+    }   
+
+    .media-container iframe {
+       position: absolute;
+       top: 0;
+       left:0;
+       right: 0;
+       bottom: 0;
+       width: 100%;
+       height: 100%;
+    }
+</style>
