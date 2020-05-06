@@ -16,6 +16,7 @@ From May to August in 2019, I worked as a software engineer intern student at Sy
 •	Developed a proof-of-concept scalable backend of [CloudSOC CASB][cloudsoc] for `Microsoft Azure`, which logs and identifies critical user activities, such as unauthorized resource purchases, dangerous permission changes and risky files creations.
 
 •	Architected backend worker with `Python3 Async IO` and developed web UI in `Angular 2`. 
+
 •	Setup `Docker `images and `CloudFormation` template to automate deploying the worker containers on `AWS ECS` cluster.
 
 •	Designed dashboards that well visualize all user activity history and risky files under `Microsoft Azure` cloud storage so that users can monitor their accounts effectively from CASB web UI.

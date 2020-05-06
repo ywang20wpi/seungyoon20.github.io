@@ -1,0 +1,20 @@
+<h1>
+	<img src="{{ '/assets/category_icons/Art.png' | relative_url }}" height="55px" style="vertical-align:bottom;">
+	美術習作
+</h1>
+<p>
+	我由中學到大學最鍾意畫畫， 每個星期二都去 New England School of Fine Art 畫人體。一齊來睇下我嘅美術習作罅~
+</p>
+<hr>
+<div class="card-group" >
+	{% for post in site.categories['Art'] %}
+		<div class="card" style="min-width: 250px; height: 300px;">
+			<img src="{{site.baseurl}}/assets/arts/{{post.img}}" class="card-img" alt="..." style="height: 300px; object-fit: cover;">
+			<div class="card-img-overlay">
+				<h5 class="card-title">{{post.title}}</h5>
+				<p class="card-text"><a href="{{post.url}}" class="stretched-link"><h3>👉</h3></a></p>
+			</div>
+		</div>
+	{% endfor %}
+</div>
+  <!-- </div> -->

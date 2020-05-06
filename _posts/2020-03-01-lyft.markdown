@@ -8,5 +8,8 @@ tags: []
 icon: assets/social_icons/lyft.svg
 intro: Incoming Software Engineer Intern in Lyft SF office! 
 ---
+#### Team: Lyft Business Admin (Online)
+#### Role: Software Engineer Intern
+#### Estimated Dates: 06/01/2020 ~ 08/21/2020
 
-I will join Lyft in May 2020 at San Francisco office as a Software Engineer Intern. I am currently working with HR team to workout which team I will join. I am very excited about it!
+I will update my internship experience later. I am very excited about joining Lyft!

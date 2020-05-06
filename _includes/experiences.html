@@ -1,0 +1,29 @@
+<div class="my-3">
+  <h1 id="experiences" class="my-3">
+    <img src="{{page.baseurl}}/assets/category_icons/experience.png" height="60px">
+    Experience
+  </h1>
+  <div class="card-deck text-center mx-2">
+    {% for post in site.categories['Experience'] %}    
+      <div class="card border-primary mb-3" style="max-width: 320px; min-width: 300px; min-height: 160px; max-height: 200px; margin: 0 auto;
+      float: none;">
+        <img class="card-img my-auto" src="{{site.baseurl}}/{{post.icon}}" style="opacity: .3; object-fit: cover; position:inherit;">
+        <div class="card-img-overlay" style="card-img-overlay-padding: 10;">
+          <div class="card-body">
+            <h5 class="card-title">{{ post.title }}</h5>
+            <p class="card-text">
+              {% if post.intro %}
+                  {{post.intro}}
+              {% else %}
+                  Click for more details!
+              {% endif%}
+              <a href="{{ site.baseurl }}{{ post.url }}" class="stretched-link">
+                👉
+              </a>
+            </p>
+          </div>
+        </div>    
+      </div> 
+    {% endfor %}
+  </div>
+</div>
