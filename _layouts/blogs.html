@@ -1,0 +1,88 @@
+---
+layout: default
+---
+
+<div class="my-3">
+    <h1 id="blogs" class="my-3 bounceInLeft animated">
+      Blog Posts
+    </h1>
+    <p class="font-weight-normal">
+      我一邊學習新技術一邊將心得記錄分享到嗰邊， 來睇下罅！
+    </p>
+    <div class="card-columns text-center">
+      {% for post in paginator.posts %} 
+        <div class="card border-primary mb-3" style="min-width: 50%; margin: auto;">
+          <!-- <img class="card-img my-auto" src="{{site.baseurl}}/{{post.icon}}" style="opacity: .3; object-fit: cover; position:inherit;"> -->
+          <!-- <div class="card-img-overlay" style="card-img-overlay-padding: 10;"> -->
+            <div class="card-body">
+              <h5 class="card-title">{{ post.title }}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">{{ post.date | date_to_string: "ordinal", "US" }}</h6>
+              <p class="card-text">
+                {% if post.intro %}
+                    {{post.intro}}
+                {% else %}
+                    Click for more details!
+                {% endif%}
+                <a href="{{ site.baseurl }}{{ post.url }}" class="stretched-link">
+                  👉
+                </a>
+              </p>
+              {% for tag in post.tags %}
+              <span class="badge badge-pill badge-primary">{{tag}}</span>
+              {% endfor %}
+            </div>
+          <!-- </div>     -->
+        </div> 
+      {% endfor %}
+    </div>
+  </div>
+  <nav aria-label="Page navigation example">
+    {% if paginator.total_pages > 1 %}
+    <ul class="pagination justify-content-center">
+      {% if paginator.previous_page %}
+      <li class="page-item">
+        <a class="page-link" href="{{ paginator.previous_page_path | relative_url }}">Next Page</a>
+      </li>
+      {% else %}
+      <li class="page-item disabled">
+        <a class="page-link" href="{{ paginator.previous_page_path | relative_url }}">Next Page</a>
+      </li>
+      {% endif %}
+      {% if paginator.next_page %}
+      <li class="page-item">
+        <a class="page-link" href="{{ paginator.next_page_path | relative_url }}">Prev Page</a>
+      </li>
+      {% else %}
+      <li class="page-item disabled">
+        <a class="page-link" href="{{ paginator.next_page_path | relative_url }}">Prev Page</a>
+      </li>
+      {% endif %}
+    </ul>
+    {% endif %}
+    </nav>
+
+  <style>
+  @media (min-width: 576px) {
+      .card-columns {
+          column-count: 1;
+      }
+  }
+
+  @media (min-width: 768px) {
+      .card-columns {
+          column-count: 2;
+      }
+  }
+
+  @media (min-width: 992px) {
+      .card-columns {
+          column-count: 2;
+      }
+  }
+
+  @media (min-width: 1200px) {
+      .card-columns {
+          column-count: 3;
+      }
+  }
+  </style>

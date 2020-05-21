@@ -3,9 +3,11 @@ layout: post
 header: WPI COMET Lab
 title:  Tissue Type Recognition for Laser-based Cancer Treatment in the Larynx
 date:   2019-10-09 19:30:02 -0400
+duration: Aug. 2019 ~ May 2020
 categories: Research
-tags: [applied math, matlab, python]
+tags: [applied math, MATLAB, EnKF, filtering]
 icon: assets/social_icons/WPI.png
+intro: This is a multidisciplinary (math/computer science/robotics) project that aims to address concerns surrounding in-office laser surgeries in the throat.
 ---
 ## Who are We
 - Students: Yixue Wang, Irene Wong, Floris J. Van Rossum, Kayla M. Swiston
@@ -15,7 +17,13 @@ icon: assets/social_icons/WPI.png
 This multidisciplinary (MA/CS/RBE) project aims to address concerns surrounding in-office laser surgeries in the throat. Currently, surgeons have difficulty determining when the laser procedure successfully targets harmful cells, but minimally damages healthy tissue. The team is conducting research on various laser-tissue interactions in order to build mathematical models and classify the tissue as healthy or unhealthy based on the estimation of tissue parameters. The fact that these parameters change over time will allow us to monitor the change in the tissue properties resulting from laser exposure, which will assist the surgeon to determine the stopping point of the laser procedure.
 
 ## Video Presentation
-<iframe width="750" height="500" style='display:block;' src="https://www.youtube.com/embed/ACirDDt7ofk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> <br>
+<iframe width="100%" height="400vh" style='display:block;' src="https://www.youtube.com/embed/ACirDDt7ofk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> <br>
 
 ## Slides Presentation
-<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vRORrzVvy7XxQQ06LxbMbSb0KUnRXxIIQQApHeLjUYZix4B3dbV0wmFyCSnH0htNQgeKAsqDW6L9JWj/embed?start=true&loop=true&delayms=5000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe><br>
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vRORrzVvy7XxQQ06LxbMbSb0KUnRXxIIQQApHeLjUYZix4B3dbV0wmFyCSnH0htNQgeKAsqDW6L9JWj/embed?start=true&loop=true&delayms=5000" frameborder="0" width="100%" height="400vh" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe><br>
+
+## Final Paper
+View in New Tab: [Final Paper][paper_link]
+<iframe src="{{site.baseurl}}/assets/other/Tissue_Type_Recognition__Final.pdf" width="100%" height="500vh"></iframe>
+<!-- https://drive.google.com/open?id=1Q0oM-IVjl8wXvSnFh5Hc4kgzwJK-GY8_ -->
+[paper_link]: {{site.baseurl}}/assets/other/Tissue_Type_Recognition__Final.pdf

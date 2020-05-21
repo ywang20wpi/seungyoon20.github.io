@@ -1,28 +1,31 @@
 <div class="my-3">
   <h1 id="researches" class="my-3">
-    <img src="/assets/category_icons/research.png" height="60px">
     Research
   </h1>
-  <div class="card-group text-center">
+  <div class="card-column mx-2">
     {% for post in site.categories['Research'] %}    
-      <div class="card border-primary mb-3" style="max-width: 320px; min-width: 300px; min-height: 160px; max-height: 200px; margin: 0 auto;
-      float: none;">
-        <img class="card-img my-auto" src="{{site.baseurl}}/{{post.icon}}" style="opacity: .3; object-fit: cover; position:inherit;">
-        <div class="card-img-overlay" style="card-img-overlay-padding: 10;">
-          <div class="card-body">
-            <h5 class="card-title">{{ post.title }}</h5>
-            <p class="card-text">
-              {% if post.intro %}
-                  {{post.intro}}
-              {% else %}
-                  Click for more details!
-              {% endif%}
-              <a href="{{ site.baseurl }}{{ post.url }}" class="stretched-link">
-                👉
-              </a>
-            </p>
+      <div class="card border-dark mb-3" style="max-width: 80%; min-width: 40%; min-height: 160px; margin: auto; float: none;">
+        <!-- <div class="card-img-overlay" style="card-img-overlay-padding: 10;"> -->
+          <div class="card-body">   
+                <h4 class="card-title">{{ post.title }}</h4>
+                <h5 class="card-subtitle mb-2 text-muted">{{ post.duration }}</h5>
+                <img class="card-top-img" style="max-height: 10vh; object-fit: contain" src="{{site.baseurl}}/{{post.icon}}">
+                <p class="card-text text-left">
+                  {% if post.intro %}
+                      {{post.intro}}
+                  {% else %}
+                      Click for more details!
+                  {% endif%}
+                  <a href="{{ site.baseurl }}{{ post.url }}" class="stretched-link">
+                    👉
+                  </a>
+                  <br>
+                  
+                </p>
+              {% for tag in post.tags %}
+              <span class="badge badge-pill badge-primary">{{tag}}</span>
+              {% endfor %}
           </div>
-        </div>    
       </div> 
     {% endfor %}
   </div>

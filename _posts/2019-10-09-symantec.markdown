@@ -3,10 +3,11 @@ layout: post
 header: Symantec
 title:  Software Engineer Intern
 date:   2019-05-20
+duration: May 2019 ~ Aug. 2019
 categories: Experience
 tags: [cloud, python, async, AWS, Azure]
 icon: assets/social_icons/symantec.svg
-intro: Worked with CloudSOC CASB team (now under Broadcom Inc.) to provide Microsoft Azure protection.
+intro: During summer in 2019 I worked with CloudSOC CASB team (now under Broadcom Inc.) to provide Microsoft Azure protection.
 ---
 
 ## Cambridge Office, CASB Team

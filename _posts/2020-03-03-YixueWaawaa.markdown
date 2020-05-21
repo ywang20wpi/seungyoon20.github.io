@@ -3,7 +3,7 @@ layout: art_post
 header: Yixue @ Figure Drawing
 title: Yixue @ Figure Drawing
 date:   2020-03-03 09:30:02 -0400
-categories: "Art"
+categories: Art
 tags: [figure drawing, charcoal]
 img: waa6waa2.jpg
 ---

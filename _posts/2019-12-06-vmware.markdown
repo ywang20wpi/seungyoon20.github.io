@@ -3,10 +3,11 @@ layout: post
 header: VMware
 title:  Cooperative Education Student
 date:   2019-12-06 09:30:02 -0400
+duration: Aug. 2019 ~ Dec. 2019
 categories: Experience
 tags: [python, data science]
 icon: assets/social_icons/vmware.svg
-intro: Confidential project! Can't give too many details here.
+intro: Co-Worked with DELL@Cairo and VMWare@Boston to build a Python SDK for Maching Learning Platform.
 ---
 - Designed and implemented a `Python SDK` for a de-centralized machine learning platform of VMware. 
 - Provided APIs that allow data scientists to connect to the platform, to build, run and retrieve machine learning jobs on the platform with `Python Shell` or `Jupyter Notebook`.

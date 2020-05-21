@@ -3,6 +3,7 @@ layout: post
 header: Lyft
 title:  Incoming Tech Intern
 date:   2019-03-01
+duration: Jun. 2020 ~ Jul. 2020
 categories: Experience
 tags: []
 icon: assets/social_icons/lyft.svg

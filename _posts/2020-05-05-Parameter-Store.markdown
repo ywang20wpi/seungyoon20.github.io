@@ -4,7 +4,7 @@ header: "AWS Parameter Store Example"
 title:  "AWS Parameter Store Example"
 date:   2020-05-05 09:30:02 -0400
 categories: "Blog"
-tags: [python, AWS, Lambda, Algolia, serverless]
+tags: [python, AWS, Lambda, serverless]
 icon: assets/social_icons/AWS-Systems-Manager_Documents_dark-bg.svg
 intro: To avoid saving API secrets in environmental variables, use Parameter Store instead!
 ---

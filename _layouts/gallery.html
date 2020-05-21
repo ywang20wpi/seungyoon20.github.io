@@ -1,0 +1,77 @@
+---
+layout: default
+---
+
+<div >
+<h1>
+	<img src="{{ '/assets/category_icons/Art.png' | relative_url }}" height="55px" style="vertical-align:bottom;">
+	美術習作
+</h1>
+<p class="font-weight-normal">
+	我由中學到大學最鍾意畫畫， 每個星期二都去 New England School of Fine Art 畫人體。一齊來睇下我嘅美術習作罅~
+</p>
+</div>
+<!-- class="bounceInLeft animated" -->
+<div class="card-columns" >
+	{% for post in paginator.posts %}
+		<div class="card zoomIn animated">
+			<img src="{{site.baseurl}}/assets/arts/{{post.img}}" class="card-img" alt="..." style="height: 300px; object-fit: cover;">
+			<div class="card-img-overlay">
+				<h5 class="card-title">{{post.title}}</h5>
+				<h6 class="card-subtitle mb-2 text-white">{{ post.date | date_to_string: "ordinal", "US" }}</h6>
+				<p class="card-text"><a href="{{post.url}}" class="stretched-link"><h3>👉</h3></a></p>
+			</div>
+		</div>
+	{% endfor %}
+</div>
+
+<nav aria-label="Page navigation example">
+{% if paginator.total_pages > 1 %}
+<ul class="pagination justify-content-center">
+	{% if paginator.previous_page %}
+	<li class="page-item">
+		<a class="page-link" href="{{ paginator.previous_page_path | relative_url }}">Next Page</a>
+	</li>
+	{% else %}
+	<li class="page-item disabled">
+		<a class="page-link" href="{{ paginator.previous_page_path | relative_url }}">Next Page</a>
+	</li>
+	{% endif %}
+	{% if paginator.next_page %}
+	<li class="page-item">
+		<a class="page-link" href="{{ paginator.next_page_path | relative_url }}">Prev Page</a>
+	</li>
+	{% else %}
+	<li class="page-item disabled">
+		<a class="page-link" href="{{ paginator.next_page_path | relative_url }}">Prev Page</a>
+	</li>
+	{% endif %}
+</ul>
+{% endif %}
+</nav>
+
+<style>
+	@media (min-width: 576px) {
+		.card-columns {
+			column-count: 1;
+		}
+	}
+  
+	@media (min-width: 768px) {
+		.card-columns {
+			column-count: 2;
+		}
+	}
+  
+	@media (min-width: 992px) {
+		.card-columns {
+			column-count: 2;
+		}
+	}
+  
+	@media (min-width: 1200px) {
+		.card-columns {
+			column-count: 3;
+		}
+	}
+	</style>
