@@ -171,7 +171,7 @@
   <span class="na">StageName</span><span class="pi">:</span>
     <span class="na">Type</span><span class="pi">:</span> <span class="s">String</span>
     <span class="na">Default</span><span class="pi">:</span> <span class="s">stage-log</span>
-    <span class="na">Description</span><span class="pi">:</span> <span class="s">The stage name of the Animal Crossing API.</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s">The stage name of the Example API.</span>
 
 <span class="na">Resources</span><span class="pi">:</span>
   <span class="na">ExampleApiApi</span><span class="pi">:</span>
@@ -220,7 +220,7 @@
   <span class="c1"># Find out more about other implicit resources you can reference within SAM</span>
   <span class="c1"># https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api</span>
   <span class="na">ExampleApi</span><span class="pi">:</span>
-    <span class="na">Description</span><span class="pi">:</span> <span class="s2">"</span><span class="s">The</span><span class="nv"> </span><span class="s">Root</span><span class="nv"> </span><span class="s">API</span><span class="nv"> </span><span class="s">address</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Animal</span><span class="nv"> </span><span class="s">Crossing</span><span class="nv"> </span><span class="s">API"</span>
+    <span class="na">Description</span><span class="pi">:</span> <span class="s2">"</span><span class="s">The</span><span class="nv"> </span><span class="s">Root</span><span class="nv"> </span><span class="s">API</span><span class="nv"> </span><span class="s">address</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Example</span><span class="nv"> </span><span class="s">API"</span>
     <span class="na">Value</span><span class="pi">:</span> <span class="kt">!Sub</span>
       <span class="pi">-</span> <span class="s2">"</span><span class="s">https://${ExampleApi}.execute-api.${AWS::Region}.amazonaws.com/${StageName}"</span>
       <span class="pi">-</span> <span class="pi">{</span><span class="nv">StageName</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="nv">StageName</span><span class="pi">}</span>
