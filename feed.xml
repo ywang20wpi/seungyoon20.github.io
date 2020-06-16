@@ -1,30 +1,197 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://seungyoon20.github.io//feed.xml" rel="self" type="application/atom+xml" /><link href="https://seungyoon20.github.io//" rel="alternate" type="text/html" /><updated>2020-06-15T02:31:14-04:00</updated><id>https://seungyoon20.github.io//feed.xml</id><title type="html">Yixue Wang</title><subtitle>Woomy&lt;:=</subtitle><entry><title type="html">AWS Parameter Store Example</title><link href="https://seungyoon20.github.io//2020/05/Parameter-Store.html" rel="alternate" type="text/html" title="AWS Parameter Store Example" /><published>2020-05-05T09:30:02-04:00</published><updated>2020-05-05T09:30:02-04:00</updated><id>https://seungyoon20.github.io//2020/05/Parameter-Store</id><content type="html" xml:base="https://seungyoon20.github.io//2020/05/Parameter-Store.html">&lt;h2 id=&quot;the-story-begins-from-&quot;&gt;The Story Begins from …&lt;/h2&gt;
-&lt;p&gt;Recently, I am working on a for-fun project with my friend Pusheen🐱. I am working on the backend using &lt;strong&gt;AWS Lambda&lt;/strong&gt; functions for the backend, &lt;strong&gt;AWS DynamoDB&lt;/strong&gt; as database, and &lt;strong&gt;Algolia&lt;/strong&gt; for searching items. &lt;del&gt;Pusheen is working the frontend with React and deployed as &lt;strong&gt;AWS S3 Static Page&lt;/strong&gt;.&lt;/del&gt; We have a search function that is triggered by HTTP GET request, takes &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;keyword&lt;/code&gt; from the parameters, and perform searching by keywords in our &lt;strong&gt;Algolia items&lt;/strong&gt;.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://seungyoon20.github.io//feed.xml" rel="self" type="application/atom+xml" /><link href="https://seungyoon20.github.io//" rel="alternate" type="text/html" /><updated>2020-06-16T02:06:14-04:00</updated><id>https://seungyoon20.github.io//feed.xml</id><title type="html">Yixue Wang</title><subtitle>Woomy&lt;:=</subtitle><entry><title type="html">AWS Parameter Store Example</title><link href="https://seungyoon20.github.io//2020/05/Parameter-Store.html" rel="alternate" type="text/html" title="AWS Parameter Store Example" /><published>2020-05-05T09:30:02-04:00</published><updated>2020-05-05T09:30:02-04:00</updated><id>https://seungyoon20.github.io//2020/05/Parameter-Store</id><content type="html" xml:base="https://seungyoon20.github.io//2020/05/Parameter-Store.html">&lt;h2 id=&quot;overview--introduction&quot;&gt;Overview &amp;amp; Introduction&lt;/h2&gt;
+&lt;p&gt;In this blog, we will introduce about how to store important strings, such as &lt;strong&gt;API keys and secrets&lt;/strong&gt; using AWS SSM and KMS together, along with how to use them in AWS Lambda functions. In our example, we will develop a backend &lt;em&gt;AWS Lambda&lt;/em&gt; function that calls &lt;em&gt;Algolia&lt;/em&gt; for searching and we want to securely save the Algolia Application Id and Algolia key for searching.&lt;/p&gt;
+
+&lt;h2 id=&quot;how-our-directory-looks-like&quot;&gt;How our directory looks like&lt;/h2&gt;
+&lt;p&gt;First, we want to start with a plain serverless application in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python&lt;/code&gt;. Our example code was built with &lt;strong&gt;AWS SAM&lt;/strong&gt;. For more details, see: &lt;a href=&quot;https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/what-is-sam.html&quot;&gt;AWS Serverless Application Model Developer Guide&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;After we initiated the serverless application, we have our directory that has the following structure:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ExampleApp
+  ├── README.md
+  ├── search
+  │   ├── __init__.py
+  │   ├── app.py
+  │   └── requirements.txt
+  ├── template.yaml
+  └── tests
+      └── unit
+          ├── __init__.py
+          └── test_handler.py
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;h2 id=&quot;setup-and-use-aws-parameter-store&quot;&gt;Setup and Use AWS Parameter Store&lt;/h2&gt;
+&lt;h3 id=&quot;1-create-secure-parameters-on-aws-systems-manager&quot;&gt;1. Create secure parameters on AWS Systems Manager.&lt;/h3&gt;
+
+&lt;p&gt;Firstly, we need to navigate to &lt;strong&gt;AWS System Manager &amp;gt; Parameter Store&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;11-go-to-system-manager&quot;&gt;1.1 Go to System Manager&lt;/h4&gt;
+&lt;figure&gt;
+  &lt;img src=&quot;/assets/img/parameter_store/step1.png&quot; alt=&quot;Step 1.1&quot; /&gt;
+  &lt;figcaption&gt; &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h4 id=&quot;12-navigate-to-parameter-store&quot;&gt;1.2 Navigate to Parameter Store&lt;/h4&gt;
+&lt;figure&gt;
+  &lt;img src=&quot;/assets/img/parameter_store/step2.png&quot; alt=&quot;Step 1.2&quot; /&gt;
+  &lt;figcaption&gt; &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h4 id=&quot;13-click-to-create-new-parameters&quot;&gt;1.3 Click to create new parameters&lt;/h4&gt;
+&lt;figure&gt;
+  &lt;img src=&quot;/assets/img/parameter_store/step3.png&quot; alt=&quot;Step 1.3&quot; /&gt;
+  &lt;figcaption&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h4 id=&quot;14-fill-the-fields-as-described-and-savehere-we-choose-to-use-the-default-aws-managed-key-for-ssmsystem-manager&quot;&gt;1.4 Fill the fields as described, and save.Here we choose to use the default AWS managed key for SSM(System Manager)&lt;/h4&gt;
+&lt;figure&gt;
+  &lt;img src=&quot;/assets/img/parameter_store/step4.png&quot; alt=&quot;Step 1.4.1&quot; /&gt;
+  &lt;img src=&quot;/assets/img/parameter_store/step5.png&quot; alt=&quot;Step 1.4.2&quot; /&gt;
+  &lt;figcaption&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h4 id=&quot;15-finish-repeate-the-steps-for-application-id-and-search-only-key&quot;&gt;1.5 Finish! Repeate the steps for Application Id and search only key!&lt;/h4&gt;
+&lt;figure&gt;
+  &lt;img src=&quot;/assets/img/parameter_store/step6.png&quot; alt=&quot;Step 1.5&quot; /&gt;
+  &lt;figcaption&gt; &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h3 id=&quot;2-setup-the-templateyaml-for-correct-permissions&quot;&gt;2. Setup the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;template.yaml&lt;/code&gt; for correct permissions.&lt;/h3&gt;
+&lt;p&gt;Next, we need to update our Cloudformation template to give the execution role correct permissions that the role can access the parameters and access the keys, to decrypt the secure parameters.&lt;/p&gt;
+
+&lt;h4 id=&quot;21-navigate-to-aws-kms&quot;&gt;2.1 Navigate to AWS KMS&lt;/h4&gt;
+&lt;figure&gt;
+  &lt;img src=&quot;/assets/img/parameter_store/step7.png&quot; alt=&quot;Step 2.1&quot; /&gt;
+  &lt;figcaption&gt;Search KMS in the services and navigate ti KMS.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h4 id=&quot;22-copy-the-awsssm-key-which-is-the-aws-managed-key-for-system-manager&quot;&gt;2.2 Copy the aws/ssm key, which is the AWS managed key for System Manager.&lt;/h4&gt;
+&lt;figure&gt;
+  &lt;img src=&quot;/assets/img/parameter_store/step8.png&quot; alt=&quot;Step 2.2&quot; /&gt;
+  &lt;figcaption&gt;Use the key that we chose when we create the parameter. In our example, we chose the default SSM key managed by AWS.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h4 id=&quot;23-update-the-search-function-configurations-to-the-following-pay-attention-to-the-policies&quot;&gt;2.3 Update the search function configurations to the following. Pay attention to the policies.&lt;/h4&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;AWSTemplateFormatVersion&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;2010-09-09'&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;Transform&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;AWS::Serverless-2016-10-31&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;Description&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;Example template.yaml&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;Parameters&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;StageName&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;Type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;String&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;Default&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;stage-log&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;Description&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;The stage name of the Animal Crossing API.&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;Resources&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;ExampleApiApi&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;Type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;AWS::Serverless::Api&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;Properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;StageName&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;!Ref&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;StageName&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;Cors&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;AllowOrigin&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'*'&quot;&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;AllowMethods&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'OPTIONS,HEAD,GET,PUT,POST,DELETE'&quot;&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;AllowHeaders&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'&quot;&lt;/span&gt;
+
+  &lt;span class=&quot;na&quot;&gt;SearchFunction&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;Type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;AWS::Serverless::Function&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;Properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;Policies&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;AWSLambdaExecute&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;AmazonDynamoDBFullAccess&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Version&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;2012-10-17'&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;Statement&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;Action&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+              &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt;  &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;ssm:GetParameters'&lt;/span&gt;
+              &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt;  &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;ssm:GetParameter'&lt;/span&gt;
+              &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt;  &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;ssm:GetParametersByPath'&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;Effect&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Allow&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;Resource&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+              &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;!Sub&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/ACCD*'&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#The execution role can access all parameters with their names starting with 'ACCD'&lt;/span&gt;
+        &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;Version&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;2012-10-17'&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;Statement&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;Action&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;kms:Decrypt'&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;Effect&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Allow&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;Resource&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+              &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;!Sub&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;arn:aws:kms:${AWS::Region}:${AWS::AccountId}:key/ac814e****-****-****-****-************'&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;CodeUri&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;search/&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;Handler&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;app.lambda_handler&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;Runtime&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;python3.6&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;Events&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;na&quot;&gt;Search&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;Type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Api&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# &lt;/span&gt;
+          &lt;span class=&quot;na&quot;&gt;Properties&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;Path&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;/search&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;Method&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;get&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;RestApiId&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+              &lt;span class=&quot;na&quot;&gt;Ref&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ExampleApi&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;Outputs&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# ServerlessRestApi is an implicit API created out of Events key under Serverless::Function&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# Find out more about other implicit resources you can reference within SAM&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;ExampleApi&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;Description&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;The&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Root&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;API&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;address&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;the&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Animal&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Crossing&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;API&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;Value&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;!Sub&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;https://${ExampleApi}.execute-api.${AWS::Region}.amazonaws.com/${StageName}&quot;&lt;/span&gt;
+      &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;pi&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;StageName&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;!Ref&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;StageName&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;SearchFunction&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;Description&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;The&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Arn&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;the&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Search&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Function&quot;&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;Value&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;!GetAtt&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;SearchFunction.Arn&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;3-update-the-lambda-function-to-use-the-parameters&quot;&gt;3. Update the lambda function to use the parameters.&lt;/h3&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;json&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;algoliasearch.search_client&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SearchClient&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;boto3&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;os&lt;/span&gt;
+
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;lambda_handler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;parameters&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'queryStringParameters'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    
+    &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;boto3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'ssm'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;res_application_id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_parameter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ACCD_Algolia_Application_ID&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;WithDecryption&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;res_seach_only_key&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_parameter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;Name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ACCD_Algolia_Search_Only_Key&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;WithDecryption&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;algolia_application_id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;res_application_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Parameter'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Value'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;algolia_search_only_key&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;res_seach_only_key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Parameter'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Value'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SearchClient&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;algolia_application_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;algolia_search_only_key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;init_index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Tags'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;search&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;parameters&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'keyword'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+                       &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'page'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;parameters&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'page'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+                        &lt;span class=&quot;s&quot;&gt;'hitsPerPage'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;24&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;'statusCode'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;'headers'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;s&quot;&gt;'Access-Control-Allow-Origin'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'*'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s&quot;&gt;'Access-Control-Allow-Headers'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Origin, X-Requested-With, Content-Type, Accept'&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;'body'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dumps&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;h1 id=&quot;finish-we-successfully-protect-our-secrets&quot;&gt;Finish! We successfully protect our secrets!&lt;/h1&gt;
+
+&lt;hr /&gt;
+&lt;h2 id=&quot;motivation--previous-efforts&quot;&gt;Motivation &amp;amp; Previous Efforts&lt;/h2&gt;
+&lt;h3 id=&quot;the-story-begins-from-&quot;&gt;The Story Begins from …&lt;/h3&gt;
+&lt;p&gt;Recently, I am working on a for-fun project with my friend Pushen. I am working on the backend using &lt;strong&gt;AWS Lambda&lt;/strong&gt; functions for the backend, &lt;strong&gt;AWS DynamoDB&lt;/strong&gt; as database, and &lt;strong&gt;Algolia&lt;/strong&gt; for searching items. We have a search function that is triggered by HTTP GET request, takes &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;keyword&lt;/code&gt; from the parameters, and perform searching by keywords in our &lt;strong&gt;Algolia items&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;p&gt;For easier development and deployment, we are using &lt;strong&gt;AWS Serverless Application Model (AWS SAM)&lt;/strong&gt; and &lt;strong&gt;PyCharm&lt;/strong&gt; to develop locally and deploy to the &lt;strong&gt;AWS Cloudformation&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;p&gt;The difficulty we met here, was to find a safe place to save the &lt;strong&gt;Algolia API Key&lt;/strong&gt; and &lt;strong&gt;Algolia API Secret&lt;/strong&gt;. Since we plan to make the code public, saving it explicitly in the code or saving it in the cloudformation template &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;template.yaml&lt;/code&gt; sounds dangerous.&lt;/p&gt;
 
-&lt;h2 id=&quot;setup-and-use-aws-parameter-store&quot;&gt;Setup and Use AWS Parameter Store&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;1. Create secure parameters on AWS Systems Manager.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The fact is, we didn’t achieve the current solution in a single effort. It tooks us 2 ugly efforts until the current version.&lt;/p&gt;
 
-&lt;p&gt;Firstly, we need to navigate to &lt;strong&gt;AWS System Manager &amp;gt; Parameter Store&lt;/strong&gt;.&lt;/p&gt;
-&lt;figure&gt;
-  &lt;img src=&quot;/assets/img/parameter_store/step1.png&quot; alt=&quot;Step 1&quot; /&gt;
-  &lt;figcaption&gt; 1.1 Go to System Manager &lt;/figcaption&gt;
-&lt;/figure&gt;
-&lt;figure&gt;
-  &lt;img src=&quot;/assets/img/parameter_store/step2.png&quot; alt=&quot;Step 2&quot; /&gt;
-  &lt;figcaption&gt; 1.2 Navigate to Parameter Store&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;&lt;strong&gt;2. Setup the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;template.yaml&lt;/code&gt; for correct permissions.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;3. Update the lambda function to use the parameters.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;why-parameter-storage-so-important--old-versions&quot;&gt;Why Parameter Storage So Important &amp;amp; Old Versions&lt;/h2&gt;
-&lt;p&gt;The fact is, we didn’t achieve the current solution in a single effort. It tooks us 2 ugly tries until the current version.&lt;/p&gt;
-&lt;h3 id=&quot;ugly-solution-0&quot;&gt;Ugly Solution 0&lt;/h3&gt;
+&lt;h3 id=&quot;ugly-solution-0-explicitly-paste-the-secrets-in-code&quot;&gt;Ugly Solution 0: Explicitly paste the secrets in code.&lt;/h3&gt;
 &lt;p&gt;This is the initial version without any optimization: &lt;strong&gt;having the secrets in the lambda function as variables&lt;/strong&gt;. This is not elegant and risky that we need to &lt;del&gt;manually&lt;/del&gt; remove the secret values and we may forget to hide the keys and secrets when we commit to the online repository.&lt;/p&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;lambda_handler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
@@ -42,7 +209,9 @@
         &lt;span class=&quot;s&quot;&gt;'body'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dumps&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;h3 id=&quot;still-ugly-solution-1&quot;&gt;Still Ugly Solution 1&lt;/h3&gt;
+&lt;p&gt;Then we tried another effort, which was one step forward, but was still not elegant enough.&lt;/p&gt;
+
+&lt;h3 id=&quot;still-ugly-solution-1-save-the-secrets-as-environmental-variables-which-means-explicitly-in-the-templateyaml&quot;&gt;Still Ugly Solution 1: save the secrets as environmental variables, which means, explicitly in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;template.yaml&lt;/code&gt;.&lt;/h3&gt;
 &lt;p&gt;An alternative solution is to add the secrets to the &lt;strong&gt;environ variables&lt;/strong&gt;. In this way, the secrets are no longer explicitly in the lambda source code, and are moved to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;template.yaml&lt;/code&gt;.
 Here is our first version of vulnerable code that we include the &lt;strong&gt;Algolia API Secrets&lt;/strong&gt; explicitly in the &lt;strong&gt;Cloudformation Template&lt;/strong&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;template.yaml&lt;/code&gt;, which create an &lt;strong&gt;API&lt;/strong&gt; called &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ExampleApi&lt;/code&gt;, and an &lt;strong&gt;AWS Lambda&lt;/strong&gt; function in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Python3.6&lt;/code&gt; called &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SearchFunction&lt;/code&gt; that allows access to function execution and DynamoDB:&lt;/p&gt;
 
@@ -82,7 +251,7 @@ Here is our first version of vulnerable code that we include the &lt;strong&gt;A
 &lt;span class=&quot;n&quot;&gt;algolia_search_only_key&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;environ&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Algolia_Search_Only_Key'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;However, this version of code is still facing the same problem as the Solution 0 when publishing the code. The vulnerabilities made us move to using the Parameter Store.&lt;/p&gt;</content><author><name></name></author><category term="python" /><category term="AWS" /><category term="Lambda" /><category term="serverless" /><summary type="html">The Story Begins from … Recently, I am working on a for-fun project with my friend Pusheen🐱. I am working on the backend using AWS Lambda functions for the backend, AWS DynamoDB as database, and Algolia for searching items. Pusheen is working the frontend with React and deployed as AWS S3 Static Page. We have a search function that is triggered by HTTP GET request, takes keyword from the parameters, and perform searching by keywords in our Algolia items.</summary></entry><entry><title type="html">Human Body Rotation Practice</title><link href="https://seungyoon20.github.io//2020/03/rotation-practice.html" rel="alternate" type="text/html" title="Human Body Rotation Practice" /><published>2020-03-03T11:30:02-05:00</published><updated>2020-03-03T11:30:02-05:00</updated><id>https://seungyoon20.github.io//2020/03/rotation-practice</id><content type="html" xml:base="https://seungyoon20.github.io//2020/03/rotation-practice.html">&lt;h3 id=&quot;i-owe-new-england-school-of-fine-art-15&quot;&gt;I Owe New England School of Fine Art $15&lt;/h3&gt;
+&lt;p&gt;However, this version of code is still facing the same problem as the Solution 0 when publishing the code. The vulnerabilities made us move to using the Parameter Store.&lt;/p&gt;</content><author><name></name></author><category term="python" /><category term="AWS" /><category term="Lambda" /><category term="serverless" /><summary type="html">Overview &amp;amp; Introduction In this blog, we will introduce about how to store important strings, such as API keys and secrets using AWS SSM and KMS together, along with how to use them in AWS Lambda functions. In our example, we will develop a backend AWS Lambda function that calls Algolia for searching and we want to securely save the Algolia Application Id and Algolia key for searching.</summary></entry><entry><title type="html">Human Body Rotation Practice</title><link href="https://seungyoon20.github.io//2020/03/rotation-practice.html" rel="alternate" type="text/html" title="Human Body Rotation Practice" /><published>2020-03-03T11:30:02-05:00</published><updated>2020-03-03T11:30:02-05:00</updated><id>https://seungyoon20.github.io//2020/03/rotation-practice</id><content type="html" xml:base="https://seungyoon20.github.io//2020/03/rotation-practice.html">&lt;h3 id=&quot;i-owe-new-england-school-of-fine-art-15&quot;&gt;I Owe New England School of Fine Art $15&lt;/h3&gt;
 &lt;p&gt;I went to New England School of Fine Art tonight, while I and my friend &lt;strong&gt;both forgot to bring cash 😂&lt;/strong&gt;. We each owe $15 until we come back from spring break and go figure drawing again.&lt;/p&gt;
 
 &lt;h3 id=&quot;the-drawing&quot;&gt;The Drawing&lt;/h3&gt;
